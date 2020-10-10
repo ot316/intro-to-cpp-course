@@ -3,39 +3,37 @@
 
 using namespace std;
 
-void print_pyramid(int);
+bool is_prime(int);
 
-void inputcheck(int& height);
 
 int main()
 {
-	int height;
-	cout << "This program prints a 'pyramid' shape of a specified height on the screen\n";
-	cout << "How high would you like the pyramid?: ";
-	cin >> height;
-	inputcheck(&height)
-	print_pyramid(height)	
-
-
-
-
-}	
-
-void inputcheck(int& height)
-{
-	if (height > 30) || (height < 1)
+	int number;
+	cout << "Enter an integer and this program will tell you if it is a prime number bwtween 1 and 1000: ";
+	cin >> number;
+	if (is_prime(number))
 	{
-		cout << "Pick another height (must be between 1 and 30:)";
-		cin >> height;
-		inputcheck(height);
-	}	
+		cout << "\nThis number is a prime number between 1 and 1000\n";
+	}
+	else
+	{
+		cout << "\nThis number is not a prime number between 1 and 1000\n";
+	}
 }
 
-void print_pyramid(int height)
+bool is_prime(int number)
 {
-	for (int i = 0; i <= height; i++)
+	if (number > 1000 || number < 0)
+		return false;
+	float sqr = sqrt(number);
+	for (int i = 2; i < sqr; i++)
 	{
-		cout << "   **   \n";
+		if (number % i == 0)
+		{
+			return false;
+		}
 	}
+	return true;
+
 }
 
