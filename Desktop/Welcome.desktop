@@ -1,8 +1,0 @@
-#!/usr/bin/env xdg-open
-[Desktop Entry]
-Name=Welcome
-Encoding=UTF-8
-Icon=www
-Type=Link
-URL=http://www.imperial.ac.uk/computing/csg/new-users/
-X-Ubuntu-Gettext-Domain=desktop_kdebase
