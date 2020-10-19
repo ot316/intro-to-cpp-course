@@ -22,6 +22,18 @@ struct Node
 	Node_ptr ptr_to_next_node;
 };
 
+void add_after(Node_ptr &list, char a_word[], char word_after[]);
+
+void delete_node(Node_ptr &a_list, char a_word[]);
+
+void list_selection_sort(Node_ptr &a_list);
+
+Node_ptr minimum_from(Node_ptr current_node);
+
+bool is_alphabetical(char first[], char second[]);
+
+void swap(char first[], char second[]);
+
 /* Function to assign a linked list to "a_node" */
 void assign_list(Node_ptr &a_list);
 
@@ -40,14 +52,33 @@ int main()
 
 	cout << "\nTHE LIST IS NOW:\n";
 	print_list(my_list);
-
+	
+	char a_word[MAX_WORD_LENGTH];
+	char word_after[MAX_WORD_LENGTH];
+	char delete_word[MAX_WORD_LENGTH];
+	//cout << "AFTER WHICH WORD WOULD YOU LIKE TO ADD AN EXTRA WORD? ";
+	//cin >> a_word;
+	//cout << endl;
+	//cout << "WHICH WORD WOULD YOU LIKE TO ADD? ";
+	//cin >> word_after;
+	//cout << endl;
+	//add_after(my_list, a_word, word_after);
+	//cout << "\nTHE LIST IS NOW:\n";
+	//print_list(my_list);
+	//cout << "WHICH WORD WOULD YOU LIKE TO DELETE? ";
+	//cin >> delete_word;
+	//delete_node(my_list, delete_word);
+	//print_list(my_list);
+	list_selection_sort(my_list);
+	cout << "AFTER SORTING, THE LIST IS: ";
+	print_list(my_list);
 	return 0;
 }
 /* END OF MAIN PROGRAM */
 
 /* DEFINITION OF FUNCTION "assign_list" */
 void assign_list(Node_ptr &a_list)
-{
+	{
 	Node_ptr current_node, last_node;
 
 	assign_new_node(a_list);
@@ -96,6 +127,96 @@ void print_list(Node_ptr a_node)
 		cout << a_node->word << " ";
 		a_node = a_node->ptr_to_next_node;
 	}
+	cout << endl;
+}
+
+/* DEFINITION OF FUNCTION "add_after" */
+void add_after(Node_ptr &list, char a_word[], char word_after[])
+{
+	Node_ptr current_node, insert_node;
+	
+	current_node = list;
+
+	while (strcmp(a_word, current_node->word))
+	{
+		current_node = current_node->ptr_to_next_node;
+		if (current_node == NULL)
+			return;
+	}		
+	assign_new_node(insert_node);
+	strcpy(insert_node->word, word_after);
+	insert_node->ptr_to_next_node = current_node->ptr_to_next_node;
+	current_node->ptr_to_next_node = insert_node;
 }
 /* END OF FUNCTION DEFINITION */
 
+
+void delete_node(Node_ptr &a_list, char a_word[])
+{
+	Node_ptr current_node, last_node;
+
+	current_node = a_list;
+
+	while (strcmp(a_word, current_node->word))
+	{
+	    last_node = current_node;
+		current_node  = current_node->ptr_to_next_node;
+		if (current_node == NULL)
+			return;
+	}
+	last_node->ptr_to_next_node = current_node->ptr_to_next_node;
+	delete current_node;
+}
+
+void list_selection_sort(Node_ptr &a_list)
+{
+	Node_ptr current_node = a_list;
+	Node_ptr smallest_node;
+	while (current_node != NULL)
+	{
+		smallest_node = minimum_from(current_node);
+		swap(current_node->word, smallest_node->word);
+		current_node = current_node->ptr_to_next_node;
+	}	
+}
+
+Node_ptr minimum_from(Node_ptr current_node)
+{
+	Node_ptr iterator_node = current_node->ptr_to_next_node;
+	Node_ptr smallest_node = current_node;
+
+	while (iterator_node != NULL)
+	{
+		if (is_alphabetical(iterator_node->word, smallest_node->word))
+			smallest_node = iterator_node;
+		iterator_node = iterator_node->ptr_to_next_node;
+	}
+	return smallest_node;
+}
+
+bool is_alphabetical(char first[], char second[])
+{
+	int count = 0;
+	
+	while (first[count] != '\0' && second[count] != '\0')
+	{
+		if (first[count] < second[count])
+			return true;
+		if (first[count] > second[count])
+			return false;
+		count++;
+	}
+	
+	if (first[count] == '\0' && second[count] != '\0')
+		return true;
+	else
+		return false;
+}
+
+void swap(char first[], char second[])
+{
+	char temp[MAX_WORD_LENGTH]; 
+	strcpy(temp, first);
+	strcpy(first, second);
+	strcpy(second, temp);
+}
