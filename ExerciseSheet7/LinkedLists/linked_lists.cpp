@@ -34,6 +34,12 @@ bool is_alphabetical(char first[], char second[]);
 
 void swap(char first[], char second[]);
 
+void print_list_forwards(Node_ptr list);
+
+void print_list_backwards(Node_ptr list);
+
+void print_list_backwards_iterative(Node_ptr list);
+
 /* Function to assign a linked list to "a_node" */
 void assign_list(Node_ptr &a_list);
 
@@ -69,12 +75,57 @@ int main()
 	//cin >> delete_word;
 	//delete_node(my_list, delete_word);
 	//print_list(my_list);
-	list_selection_sort(my_list);
-	cout << "AFTER SORTING, THE LIST IS: ";
-	print_list(my_list);
+	//list_selection_sort(my_list);
+	//cout << "AFTER SORTING, THE LIST IS: ";
+	cout << "The list forwards is\n";
+	print_list_forwards(my_list);
+	cout << endl;
+	cout << "The list backwards is\n";
+	print_list_backwards_iterative(my_list);
+	cout << endl;
 	return 0;
 }
 /* END OF MAIN PROGRAM */
+
+void print_list_forwards(Node_ptr list)
+{
+	if (list != NULL)
+	{
+		cout << list->word << " ";
+		print_list_forwards(list->ptr_to_next_node);
+
+	}
+}
+void print_list_backwards(Node_ptr list)
+{
+	if (list != NULL)
+	{
+		print_list_backwards(list->ptr_to_next_node);
+		cout << list->word << " ";
+	}
+}
+
+
+void print_list_backwards_iterative(Node_ptr list)
+{
+	int count = 0;
+	Node_ptr  iterator_node = list;
+	while (iterator_node != NULL)
+	{
+		iterator_node = iterator_node->ptr_to_next_node;
+		count++;
+	}
+	iterator_node = list;
+	for (int i = count; i > 0; i--)
+	{
+		for (int j = 1; j < i; j++)
+		{
+			iterator_node = iterator_node->ptr_to_next_node;
+		}
+		cout << iterator_node->word  << " ";
+		iterator_node = list;
+	}
+}
 
 /* DEFINITION OF FUNCTION "assign_list" */
 void assign_list(Node_ptr &a_list)
