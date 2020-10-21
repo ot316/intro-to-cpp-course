@@ -4,9 +4,6 @@ using namespace std;
 
 const int MAX = 11;
 
-/* Function to swap the values of two integer variables */
-void swap(int& first, int& second);
-
 /* Function to display the contents of the array "a" up to element a[length-1] */
 void display(int a[], int length);
 
@@ -20,7 +17,7 @@ int main()
 	display(list,MAX);
 	cout << "Enter the number you wish to know the position of: ";
 	cin >> value;
-	cout << endl << binary_search(value, list, 0, 11);
+	cout << endl << binary_search(value, list, 0, 11) << endl;
 	return 0;
 }
 /* END OF MAIN PROGRAM */
@@ -33,19 +30,11 @@ int binary_search(int value, int list[], int first, int last)
 	if (list[pivot] == value)
 		return pivot;
 	if (list[pivot] > value)
-		return binary_search(value, list, first, pivot);
+		return binary_search(value, list, first, pivot-1);
 	if (list[pivot] < value)
-		return binary_search(value, list, pivot, last);
+		return binary_search(value, list, pivot+1, last);
 }
 
-/* DEFINITION OF FUNCTION "swap" */
-void swap(int& first, int& second)
-{
-	int temp = first;
-	first = second;
-	second = temp;
-}
-/* END OF FUNCTION DEFINITION */
 
 /* DEFINITION OF FUNCTION "display" */
 void display(int a[], int length)
